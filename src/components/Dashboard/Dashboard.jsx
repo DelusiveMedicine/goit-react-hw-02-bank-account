@@ -3,40 +3,52 @@ import React, { Component } from 'react';
 import Controls from '../Controls/Controls';
 import Balance from '../Balance/Balance';
 
+const initState = {
+  id: '',
+  type: '',
+  amount: 0,
+  date: '',
+};
+
 class Dashboard extends Component {
   state = {
     transactions: [],
     balance: 0,
+    transaction: {...initState}
   };
+
 
   onDeposit = amount => {
     this.setState(prevState => ({
       balance: prevState.balance + amount,
     }));
+    this.addTransaction();
   };
 
   onWithdraw = amount => {
     this.setState(prevState => ({
       balance: prevState.balance - amount,
     }));
+    this.addTransaction();
   };
 
-  getTransaction = transaction => {
+  addTransaction = () => {
+    const { transaction } = this.state;
     this.setState(prevState => ({
       transactions: [...prevState.transactions, transaction],
+      transaction: {...initState}
     }));
-  };
+  }
 
   render() {
-    const { balance, transactions } = this.state;
+    const { balance, transaction } = this.state;
     return (
       <div>
         <Controls
-          transactions={transactions}
-          balance={balance}
+          transaction={transaction}
           onDeposit={this.onDeposit}
           onWithdraw={this.onWithdraw}
-          getTransaction={this.getTransaction}
+          balance = {balance}
         />
         <Balance balance={balance} />
       </div>

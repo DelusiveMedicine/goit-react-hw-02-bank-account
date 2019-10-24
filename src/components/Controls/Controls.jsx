@@ -4,30 +4,21 @@ import { withToastManager } from 'react-toast-notifications';
 import PropTypes from 'prop-types';
 import shortId from 'shortid';
 
-const initState = {
-  id: '',
-  type: '',
-  amount: 0,
-  date: '',
-};
-
 class Controls extends Component {
-  state = { ...initState };
+  state = { amount: 0 };
 
   changeHandler = ({ target }) => {
     const { value } = target;
     const valueNumber = Number(value);
     this.setState({
       amount: valueNumber,
-      id: shortId(),
-      date: new Date().toLocaleString(),
     });
   };
 
   clickHandler = ({ target }) => {
-    const { toastManager, onDeposit, getTransaction } = this.props;
+    const { toastManager, onDeposit, transaction } = this.props;
     const { dataset } = target;
-    const { amount, type } = this.state;
+    const { amount } = this.state;
 
     if (amount <= 0) {
       return toastManager.add('Введите сумму для проведения операции!', {
@@ -35,29 +26,20 @@ class Controls extends Component {
         autoDismiss: true,
       });
     }
-    this.setState({ type: dataset.name });
 
-    if (type === 'deposit') return this.depositHandler();
-    if (type === 'withdraw') return this.withdrawHandler();
+    transaction.type = dataset.name;
+    transaction.amount = amount;
+    transaction.date = new Date().toLocaleString();
+    transaction.id = shortId();
 
-    // getTransaction(this.state);
-  };
-
-  depositHandler = () => {
-    const { onDeposit, getTransaction } = this.props;
-    const { amount, type } = this.state;
-    // getTransaction(this.state);
-    onDeposit(amount);
-    console.log(this.state);
-    if (type) {
-      getTransaction(this.state);
-      this.setState({ ...initState });
-    }
+    if (dataset.name === 'deposit') onDeposit(amount);
+    if (dataset.name === 'withdraw') this.withdrawHandler();
+    this.setState({amount: 0})
   };
 
   withdrawHandler = () => {
-    const { onWithdraw, toastManager, balance, getTransaction } = this.props;
-    const { amount, type } = this.state;
+    const { onWithdraw, toastManager, balance } = this.props;
+    const { amount } = this.state;
     if (balance < amount) {
       return toastManager.add(
         'На счету недостаточно средств для проведения операции!',
@@ -67,23 +49,12 @@ class Controls extends Component {
         },
       );
     }
-    // getTransaction(this.state);
     onWithdraw(amount);
-    if (type) {
-      getTransaction(this.state);
-      this.setState({ ...initState });
-    }
-    console.log(this.state);
-    // return this.setState({ ...initState });
   };
 
   render() {
-    const { amount, type } = this.state;
-    const { getTransaction, balance } = this.props;
-    // if (type) {
-    //   getTransaction(this.state);
-    //   this.setState({ ...initState });
-    // }
+    const { amount } = this.state;
+
     return (
       <section>
         <input
