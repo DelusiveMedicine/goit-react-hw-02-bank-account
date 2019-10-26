@@ -1,4 +1,3 @@
-/* eslint-disable react/state-in-constructor */
 import React, { Component } from 'react';
 import { withToastManager } from 'react-toast-notifications';
 import PropTypes from 'prop-types';
@@ -34,7 +33,7 @@ class Controls extends Component {
 
     if (dataset.name === 'deposit') onDeposit(amount);
     if (dataset.name === 'withdraw') this.withdrawHandler();
-    this.setState({amount: 0})
+    this.setState({ amount: 0 });
   };
 
   withdrawHandler = () => {

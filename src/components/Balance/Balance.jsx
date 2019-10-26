@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Balance = ({ balance }) => {
+const Balance = ({ balance, income, expenses }) => {
   return (
     <section>
-      <span>⬆️2000$</span>
-      <span>⬇️1000$</span>
+      <span>⬆{income}$</span>
+      <span>⬇{expenses}$</span>
       <span>{`Balance: ${balance}`}</span>
     </section>
   );
