@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styles from './Controls.module.css';
 import { withToastManager } from 'react-toast-notifications';
 import PropTypes from 'prop-types';
 import shortId from 'shortid';
@@ -53,9 +54,10 @@ class Controls extends Component {
 
   render() {
     const { amount } = this.state;
+    const { controls } = styles;
 
     return (
-      <section>
+      <section className={controls}>
         <input
           type="number"
           name="amount"

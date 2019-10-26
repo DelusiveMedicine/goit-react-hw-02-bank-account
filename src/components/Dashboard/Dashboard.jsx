@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styles from './Dashboard.module.css';
 import Controls from '../Controls/Controls';
 import Balance from '../Balance/Balance';
 import TransactionHistory from '../TransactionHistory/TransactionHistory';
@@ -20,7 +21,6 @@ class Dashboard extends Component {
   };
 
   onDeposit = amount => {
-    const { income } = this.state;
     this.setState(prevState => ({
       balance: prevState.balance + amount,
       income: prevState.income + amount,
@@ -29,7 +29,6 @@ class Dashboard extends Component {
   };
 
   onWithdraw = amount => {
-    const { expenses } = this.state;
     this.setState(prevState => ({
       balance: prevState.balance - amount,
       expenses: prevState.expenses + amount,
@@ -47,8 +46,9 @@ class Dashboard extends Component {
 
   render() {
     const { balance, transaction, income, expenses, transactions } = this.state;
+    const { dashboard } = styles;
     return (
-      <div>
+      <div className={dashboard}>
         <Controls
           transaction={transaction}
           onDeposit={this.onDeposit}
