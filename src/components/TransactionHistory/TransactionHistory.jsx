@@ -1,24 +1,28 @@
 import React from 'react';
+import styles from './TransactionHistory.module.css';
+import thousandsSeparator from '../helpers';
 
 const TransactionHistory = ({ items }) => {
+  const { history, historyBodyItem, historyHeadItem } = styles;
   return (
-    <table className="transaction-history">
+    <table className={history}>
       <thead>
         <tr>
-          <th>Transaction</th>
-          <th>Amount</th>
-          <th>Date</th>
+          <th className={historyHeadItem}>Transaction</th>
+          <th className={historyHeadItem}>Amount</th>
+          <th className={historyHeadItem}>Date</th>
         </tr>
       </thead>
 
       <tbody>
         {items.map(item => {
           const { id, type, amount, date } = item;
+          const withFixedPoint = thousandsSeparator(amount.toFixed(2));
           return (
             <tr key={id}>
-              <td>{type}</td>
-              <td>{amount}</td>
-              <td>{date}</td>
+              <td className={historyBodyItem}>{type}</td>
+              <td className={historyBodyItem}>{withFixedPoint}$</td>
+              <td className={historyBodyItem}>{date}</td>
             </tr>
           );
         })}

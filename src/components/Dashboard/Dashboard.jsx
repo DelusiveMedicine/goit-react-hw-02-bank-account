@@ -65,7 +65,7 @@ class Dashboard extends Component {
           income={fixedPointIncome}
           expenses={fixedPointExpenses}
         />
-        <TransactionHistory items={transactions} />
+        {transactions.length > 0 && <TransactionHistory items={transactions} />}
       </div>
     );
   }
