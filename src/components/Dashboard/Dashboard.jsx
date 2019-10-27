@@ -3,6 +3,7 @@ import styles from './Dashboard.module.css';
 import Controls from '../Controls/Controls';
 import Balance from '../Balance/Balance';
 import TransactionHistory from '../TransactionHistory/TransactionHistory';
+import thousandsSeparator from '../helpers';
 
 const initState = {
   id: '',
@@ -47,6 +48,10 @@ class Dashboard extends Component {
   render() {
     const { balance, transaction, income, expenses, transactions } = this.state;
     const { dashboard } = styles;
+    const fixedPointBalance = thousandsSeparator(balance.toFixed(2));
+    const fixedPointIncome = thousandsSeparator(income.toFixed(2));
+    const fixedPointExpenses = thousandsSeparator(expenses.toFixed(2));
+
     return (
       <div className={dashboard}>
         <Controls
@@ -55,7 +60,11 @@ class Dashboard extends Component {
           onWithdraw={this.onWithdraw}
           balance={balance}
         />
-        <Balance balance={balance} income={income} expenses={expenses} />
+        <Balance
+          balance={fixedPointBalance}
+          income={fixedPointIncome}
+          expenses={fixedPointExpenses}
+        />
         <TransactionHistory items={transactions} />
       </div>
     );
