@@ -1,69 +1,85 @@
+/* eslint-disable react/state-in-constructor */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withToastManager } from 'react-toast-notifications';
+import shortId from 'shortid';
 import styles from './Dashboard.module.css';
 import Controls from '../Controls/Controls';
 import Balance from '../Balance/Balance';
 import TransactionHistory from '../TransactionHistory/TransactionHistory';
 import thousandsSeparator from '../helpers';
 
-const initState = {
-  id: '',
-  type: '',
-  amount: 0,
-  date: '',
-};
-
 class Dashboard extends Component {
   state = {
     transactions: [],
     balance: 0,
-    transaction: { ...initState },
-    income: 0,
-    expenses: 0,
   };
 
   onDeposit = amount => {
     this.setState(prevState => ({
       balance: prevState.balance + amount,
-      income: prevState.income + amount,
     }));
-    this.addTransaction();
+    this.addTransaction('deposit', amount);
   };
 
   onWithdraw = amount => {
+    const { balance } = this.state;
+    const { toastManager } = this.props;
+    if (balance < amount) {
+      return toastManager.add(
+        'На счету недостаточно средств для проведения операции!',
+        {
+          appearance: 'warning',
+          autoDismiss: true,
+        },
+      );
+    }
     this.setState(prevState => ({
       balance: prevState.balance - amount,
-      expenses: prevState.expenses + amount,
     }));
-    this.addTransaction();
+    return this.addTransaction('withdraw', amount);
   };
 
-  addTransaction = () => {
-    const { transaction } = this.state;
+  addTransaction = (type, amount) => {
+    const transaction = {
+      id: shortId(),
+      type,
+      amount,
+      date: new Date().toLocaleString(),
+    };
+
     this.setState(prevState => ({
       transactions: [...prevState.transactions, transaction],
-      transaction: { ...initState },
     }));
+  };
+
+  handleSum = type => {
+    const { transactions } = this.state;
+    const sum = transactions.reduce(
+      (acc, unit) => acc + (unit.type === type && unit.amount),
+      0,
+    );
+    return thousandsSeparator(sum.toFixed(2));
   };
 
   render() {
-    const { balance, transaction, income, expenses, transactions } = this.state;
+    const { balance, transactions } = this.state;
     const { dashboard } = styles;
     const fixedPointBalance = thousandsSeparator(balance.toFixed(2));
-    const fixedPointIncome = thousandsSeparator(income.toFixed(2));
-    const fixedPointExpenses = thousandsSeparator(expenses.toFixed(2));
+    const income = this.handleSum('deposit');
+    const expenses = this.handleSum('withdraw');
 
     return (
       <div className={dashboard}>
         <Controls
-          transaction={transaction}
           onDeposit={this.onDeposit}
           onWithdraw={this.onWithdraw}
           balance={balance}
         />
         <Balance
           balance={fixedPointBalance}
-          income={fixedPointIncome}
-          expenses={fixedPointExpenses}
+          income={income}
+          expenses={expenses}
         />
         {transactions.length > 0 && <TransactionHistory items={transactions} />}
       </div>
@@ -71,4 +87,9 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+Dashboard.propTypes = {
+  toastManager: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
+    .isRequired,
+};
+
+export default withToastManager(Dashboard);

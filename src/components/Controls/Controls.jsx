@@ -1,11 +1,11 @@
+/* eslint-disable react/state-in-constructor */
 import React, { Component } from 'react';
-import styles from './Controls.module.css';
 import { withToastManager } from 'react-toast-notifications';
 import PropTypes from 'prop-types';
-import shortId from 'shortid';
+import styles from './Controls.module.css';
 
 class Controls extends Component {
-  state = { amount: 0 };
+  state = { amount: '' };
 
   changeHandler = ({ target }) => {
     const { value } = target;
@@ -16,7 +16,7 @@ class Controls extends Component {
   };
 
   clickHandler = ({ target }) => {
-    const { toastManager, onDeposit, transaction } = this.props;
+    const { toastManager, onDeposit, onWithdraw } = this.props;
     const { dataset } = target;
     const { amount } = this.state;
 
@@ -27,29 +27,9 @@ class Controls extends Component {
       });
     }
 
-    transaction.type = dataset.name;
-    transaction.amount = amount;
-    transaction.date = new Date().toLocaleString();
-    transaction.id = shortId();
-
     if (dataset.name === 'deposit') onDeposit(amount);
-    if (dataset.name === 'withdraw') this.withdrawHandler();
-    this.setState({ amount: 0 });
-  };
-
-  withdrawHandler = () => {
-    const { onWithdraw, toastManager, balance } = this.props;
-    const { amount } = this.state;
-    if (balance < amount) {
-      return toastManager.add(
-        'На счету недостаточно средств для проведения операции!',
-        {
-          appearance: 'warning',
-          autoDismiss: true,
-        },
-      );
-    }
-    onWithdraw(amount);
+    if (dataset.name === 'withdraw') onWithdraw(amount);
+    return this.setState({ amount: '' });
   };
 
   render() {
