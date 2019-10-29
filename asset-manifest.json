@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/goit-react-hw-02-bank-account/static/css/main.97c709ad.chunk.css",
-    "main.js": "/goit-react-hw-02-bank-account/static/js/main.de16deb9.chunk.js",
-    "main.js.map": "/goit-react-hw-02-bank-account/static/js/main.de16deb9.chunk.js.map",
+    "main.css": "/goit-react-hw-02-bank-account/static/css/main.bd968239.chunk.css",
+    "main.js": "/goit-react-hw-02-bank-account/static/js/main.a71cb10f.chunk.js",
+    "main.js.map": "/goit-react-hw-02-bank-account/static/js/main.a71cb10f.chunk.js.map",
     "runtime-main.js": "/goit-react-hw-02-bank-account/static/js/runtime-main.1775bb0a.js",
     "runtime-main.js.map": "/goit-react-hw-02-bank-account/static/js/runtime-main.1775bb0a.js.map",
-    "static/js/2.de0c76a0.chunk.js": "/goit-react-hw-02-bank-account/static/js/2.de0c76a0.chunk.js",
-    "static/js/2.de0c76a0.chunk.js.map": "/goit-react-hw-02-bank-account/static/js/2.de0c76a0.chunk.js.map",
+    "static/js/2.28e0f534.chunk.js": "/goit-react-hw-02-bank-account/static/js/2.28e0f534.chunk.js",
+    "static/js/2.28e0f534.chunk.js.map": "/goit-react-hw-02-bank-account/static/js/2.28e0f534.chunk.js.map",
     "index.html": "/goit-react-hw-02-bank-account/index.html",
-    "precache-manifest.06aa6e5e91ff8e195d869699240497cf.js": "/goit-react-hw-02-bank-account/precache-manifest.06aa6e5e91ff8e195d869699240497cf.js",
+    "precache-manifest.ffcb1395c39c7cd645722d43bd9390de.js": "/goit-react-hw-02-bank-account/precache-manifest.ffcb1395c39c7cd645722d43bd9390de.js",
     "service-worker.js": "/goit-react-hw-02-bank-account/service-worker.js",
-    "static/css/main.97c709ad.chunk.css.map": "/goit-react-hw-02-bank-account/static/css/main.97c709ad.chunk.css.map",
+    "static/css/main.bd968239.chunk.css.map": "/goit-react-hw-02-bank-account/static/css/main.bd968239.chunk.css.map",
     "static/media/Balance.module.css": "/goit-react-hw-02-bank-account/static/media/up-arrow.a86d8d5c.svg",
     "static/media/TransactionHistory.module.css": "/goit-react-hw-02-bank-account/static/media/roboto-v20-latin-300.ef7c6637.woff2",
     "static/media/Controls.module.css": "/goit-react-hw-02-bank-account/static/media/roboto-v20-latin-regular.60fa3c06.woff"
   },
   "entrypoints": [
     "static/js/runtime-main.1775bb0a.js",
-    "static/js/2.de0c76a0.chunk.js",
-    "static/css/main.97c709ad.chunk.css",
-    "static/js/main.de16deb9.chunk.js"
+    "static/js/2.28e0f534.chunk.js",
+    "static/css/main.bd968239.chunk.css",
+    "static/js/main.a71cb10f.chunk.js"
   ]
 }
